@@ -1,0 +1,50 @@
+
+MENU_PROMPT = "\nEnter 'a' to add a movie, 'l' to see your movies, 'f' to find a movie by title, or 'q' to quit: "
+movies: list[dict[str, str]] = []
+
+
+def movies_detail_input():  # This function gathers user's data
+    title = input("Enter the movie title: ").title()
+    director = input("Enter the movie director: ").title()
+    year = input("Enter the movie release year: ")
+    movie = dict(title=title, director=director, year=year)
+    return movie
+
+
+def movies_add_to_list():  # This functions adds a movie to list
+    movie = movies_detail_input()
+    movies.append(movie)
+
+
+def show_movies(): # this function prints movies list
+    for movie in movies:
+        print(f'{movie["title"]}({movie["year"]}) by {movie["director"]}. ')
+
+
+def finding_movies(): # function for finding movies by title
+    movie_title = input("Enter the movie title to find data about: ").title()
+    for movie in movies:
+        if movie["title"] == movie_title:
+            print(f'{movie["title"]}({movie["year"]}) by {movie["director"]}. ')
+
+
+user_options = {
+    "a": movies_add_to_list,
+    "l": show_movies,
+    "f": finding_movies
+}
+
+
+def menu():
+    selection = input(MENU_PROMPT)
+    while selection != 'q':
+        if selection in user_options:
+            selected_function = user_options[selection]
+            selected_function()
+        else:
+            print('Unknown command. Please try again.')
+
+        selection = input(MENU_PROMPT)
+
+
+menu()
